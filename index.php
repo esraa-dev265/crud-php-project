@@ -1,86 +1,224 @@
+<?php
+
+// ================= CONNECTION =================
+require_once("connection.php");
+
+// ================= SAVE =================
+if(isset($_POST["save"]))
+{
+    $id = $_POST["id"];
+    $name = $_POST["name"];
+    $address = $_POST["address"];
+    $age = $_POST["age"];
+
+    $result = mysqli_query($link ,
+        "INSERT INTO users (id,name,address,age)
+         VALUES ('$id','$name','$address','$age')");
+
+    if($result)
+        echo "<p style='color:green;text-align:center;'>Added Successfully</p>";
+    else
+        echo "<p style='color:red;text-align:center;'>Error : ".mysqli_error($link)."</p>";
+}
+
+
+// ================= UPDATE =================
+if(isset($_POST["update"]))
+{
+    $id = $_POST["id"];
+    $name = $_POST["name"];
+    $address = $_POST["address"];
+    $age = $_POST["age"];
+
+    $result = mysqli_query($link ,
+        "UPDATE users SET
+        name='$name',
+        address='$address',
+        age='$age'
+        WHERE id='$id'");
+
+    if($result)
+        echo "<p style='color:green;text-align:center;'>Updated Successfully</p>";
+    else
+        echo "<p style='color:red;text-align:center;'>Error : ".mysqli_error($link)."</p>";
+}
+
+
+// ================= DELETE =================
+if(isset($_POST["delete"]))
+{
+    $id = $_POST["id"];
+
+    $result = mysqli_query($link ,
+        "DELETE FROM users WHERE id='$id'");
+
+    if($result)
+        echo "<p style='color:green;text-align:center;'>Deleted Successfully</p>";
+    else
+        echo "<p style='color:red;text-align:center;'>Error : ".mysqli_error($link)."</p>";
+}
+
+
+// ================= DISPLAY =================
+$displayData = false;
+
+if(isset($_POST["display"]))
+{
+    $displayData = true;
+    $result = mysqli_query($link ,"SELECT * FROM users");
+}
+
+?>
+
+
+<!DOCTYPE html>
 <html>
 <head>
-<title> welcome to login page</title>
 
- <h1>fall this form please </h1> </head>
+<meta charset="UTF-8">
+<title>CRUD System</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background: linear-gradient(to right,#4facfe,#00f2fe);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    background:white;
+    padding:25px;
+    width:350px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
+
+h1{
+    text-align:center;
+    color:#333;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+input[type=text]{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.buttons{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+input[type=submit]{
+    flex:1;
+    padding:8px;
+    background:#4facfe;
+    border:none;
+    color:white;
+    font-weight:bold;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+input[type=submit]:hover{
+    background:#00c6fb;
+}
+
+table{
+    margin-top:20px;
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:7px;
+    border:1px solid #ccc;
+    text-align:center;
+}
+
+th{
+    background:#4facfe;
+    color:white;
+}
+
+</style>
+
+</head>
+
 <body>
-<form action ="index.php" method ="POST">
 
-<label>Id </label>
-<input type ="text" name ="id">
+<div class="container">
 
-<label> Name </label>
-<input type ="text" name ="name">
+<h1>CRUD System</h1>
 
-<label> Address </label>
-<input type ="text" name ="address">
+<form method="POST">
 
-<label> Age </label>
-<input type ="text" name ="age">
+<label>ID</label>
+<input type="text" name="id">
 
-<input type ="submit" name ="save" value ="save">
-<input type ="submit" name = "update" value ="update">
-<input type ="submit" name ="delete" value ="delete">
-<input type ="submit" name ="display" value ="display">
+<label>Name</label>
+<input type="text" name="name">
+
+<label>Address</label>
+<input type="text" name="address">
+
+<label>Age</label>
+<input type="text" name="age">
+
+
+<div class="buttons">
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="update" value="Update">
+<input type="submit" name="delete" value="Delete">
+<input type="submit" name="display" value="Display">
+
+</div>
 
 </form>
 
 
-</body>
-
-</html>
 <?php
-if(isset($_POST["save"]))
+// ============== SHOW DATA ==============
+if($displayData)
 {
-	$id =$_POST["id"];
-	$name =$_POST["name"];
-	$address =$_POST["address"];
-	$age=$_POST["age"];
-	require_once("connection.php");
-	$result =mysqli_query($link ,"INSERT INTO users (id, name, address, age) 
-VALUES ('$id','$name','$address','$age')");
-	mysqli_close($link);
-	if($result)
-	{
-	echo "added successfully";
-	} else echo "added failed :".mysqli_error($link);
-}	
- if(isset($_POST["update"]))
- {
-	 $id =$_POST["id"];
-	 $name =$_POST["name"];
-	 $address =$_POST["address"];
-	 $age =$_POST["age"];
-	 require_once("connection.php");
-	 $result= mysqli_query($link ,"update users set name ='$name' ,address ='$address' ,age ='$age' where id ='$id'");
-	 if($result)
-	 {echo "updated successfully";}
- else echo "updated failed :".mysqli_error($link);
-	 mysqli_close($link);
-	 
- }
-if(isset($_POST["delete"]))
-{
-	$id =$_POST["id"];
-	require_once("connection.php");
-	$result = mysqli_query($link ,"delete from users where id ='$id'");
-	if($result){echo "row deleted successfully";}
-	else echo "deleted failed :".mysqli_error($link);
-	mysqli_close($link);
-}
+    echo "<table>";
+    echo "<tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Age</th>
+          </tr>";
 
+    while($row = mysqli_fetch_assoc($result))
+    {
+        echo "<tr>
+                <td>{$row['id']}</td>
+                <td>{$row['name']}</td>
+                <td>{$row['address']}</td>
+                <td>{$row['age']}</td>
+              </tr>";
+    }
 
-if(isset($_POST["display"]))
-{
-	require_once("connection.php");
-	$result = mysqli_query ($link,"select * from users");
-	echo "<table border ='1'><tr><th>ID</th><th>Name</th><th>Address</th><th>Age </th></tr> ";
-	while ($row =mysqli_fetch_assoc($result))
-	{
-		echo "<tr><td>{$row['id']}</td><td>{$row['name']}</td><td>{$row['address']}</td><td>{$row['age']}</td></tr>";
-	
-}
-echo "</table>";
-mysqli_close($link);
+    echo "</table>";
 }
 ?>
+
+</div>
+
+</body>
+</html>
