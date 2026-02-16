@@ -23,7 +23,7 @@ echo "<script> alert('please fill all fields');</script>";
     if($result)
         echo " <script> alert ('Added Successfully')
         ;
-       window.location ='index.php'; </script> ";
+      </script> ";
     else
         echo " <script> alert ('Added failed');
        </script> ";
@@ -53,7 +53,7 @@ echo "<script> alert('please fill all fields');</script>";
 
     if($result)
         echo " <script> alert ('Updated Successfully');
-      window.location ='index.php'; </script> ";
+      </script> ";
     else
         echo "<script> alert ('Updated failed');
        </script>";
@@ -70,7 +70,7 @@ if(isset($_POST["delete"]))
 
     if($result)
         echo " <script> alert (' Deleted Successfully');
-       window.location ='index.php';</script>";
+    </script>";
     else
         echo " <script> alert (' Deleted failed');
        </script>";
