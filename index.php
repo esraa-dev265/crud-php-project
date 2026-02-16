@@ -10,15 +10,23 @@ if(isset($_POST["save"]))
     $name = $_POST["name"];
     $address = $_POST["address"];
     $age = $_POST["age"];
-
+ if ( empty($name) || empty($address) || empty($age))
+ {
+echo "<script> alert('please fill all fields');</script>";
+     exit;
+     
+ }
     $result = mysqli_query($link ,
         "INSERT INTO users (id,name,address,age)
          VALUES ('$id','$name','$address','$age')");
 
     if($result)
-        echo "<p style='color:green;text-align:center;'>Added Successfully</p>";
+        echo " <script> alert ('Added Successfully')
+        ;
+       window.location ='index.php'; </script> ";
     else
-        echo "<p style='color:red;text-align:center;'>Error : ".mysqli_error($link)."</p>";
+        echo " <script> alert ('Added failed');
+       </script> ";
 }
 
 
@@ -30,6 +38,12 @@ if(isset($_POST["update"]))
     $address = $_POST["address"];
     $age = $_POST["age"];
 
+     if ( empty($name) || empty($address) || empty($age))
+ {
+echo "<script> alert('please fill all fields');</script>";
+    exit;
+     
+ }
     $result = mysqli_query($link ,
         "UPDATE users SET
         name='$name',
@@ -38,9 +52,11 @@ if(isset($_POST["update"]))
         WHERE id='$id'");
 
     if($result)
-        echo "<p style='color:green;text-align:center;'>Updated Successfully</p>";
+        echo " <script> alert ('Updated Successfully');
+      window.location ='index.php'; </script> ";
     else
-        echo "<p style='color:red;text-align:center;'>Error : ".mysqli_error($link)."</p>";
+        echo "<script> alert ('Updated failed');
+       </script>";
 }
 
 
@@ -53,9 +69,11 @@ if(isset($_POST["delete"]))
         "DELETE FROM users WHERE id='$id'");
 
     if($result)
-        echo "<p style='color:green;text-align:center;'>Deleted Successfully</p>";
+        echo " <script> alert (' Deleted Successfully');
+       window.location ='index.php';</script>";
     else
-        echo "<p style='color:red;text-align:center;'>Error : ".mysqli_error($link)."</p>";
+        echo " <script> alert (' Deleted failed');
+       </script>";
 }
 
 
